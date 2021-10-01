@@ -6,7 +6,7 @@ public class InventoryID extends Identity {
     public InventoryID(){
     }
 
-    private InventoryID(String id){
+    public InventoryID(String id){
         super(id);
     }
 

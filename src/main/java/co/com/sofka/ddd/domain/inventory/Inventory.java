@@ -21,7 +21,7 @@ public class Inventory extends AggregateEvent<InventoryID> {
 
     public Inventory(InventoryID inventoryID, OfficeID officeID, OfficeName officeName) {
         super(inventoryID);
-        appendChange(new InventoryCreated(officeID,officeName)).apply();
+        appendChange(new InventoryCreated(inventoryID,officeID,officeName)).apply();
     }
 
     private Inventory(InventoryID inventoryID){
@@ -91,7 +91,7 @@ public class Inventory extends AggregateEvent<InventoryID> {
         Objects.requireNonNull(productName);
         Objects.requireNonNull(productState);
         Objects.requireNonNull(productQuanty);
-        appendChange(new ProductAdded(entityId, productPrice, productName, productState, productQuanty));
+        appendChange(new ProductAdded(this.identity(), entityId, productPrice, productName, productState, productQuanty));
     }
 
     public void addProvider(ProviderID entityId, TotalItems totalItems){
