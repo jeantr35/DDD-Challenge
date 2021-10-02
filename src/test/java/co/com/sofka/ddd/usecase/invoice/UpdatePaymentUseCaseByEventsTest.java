@@ -3,12 +3,12 @@ package co.com.sofka.ddd.usecase.invoice;
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.RequestCommand;
+import co.com.sofka.business.support.TriggeredEvent;
 import co.com.sofka.ddd.domain.inventory.value.ProductID;
-import co.com.sofka.ddd.domain.invoice.commands.UpdateAddress;
 import co.com.sofka.ddd.domain.invoice.commands.UpdateContactNumber;
-import co.com.sofka.ddd.domain.invoice.events.AddressUpdated;
 import co.com.sofka.ddd.domain.invoice.events.ContactNumberUpdated;
 import co.com.sofka.ddd.domain.invoice.events.InvoiceCreated;
+import co.com.sofka.ddd.domain.invoice.events.PaymentUpdated;
 import co.com.sofka.ddd.domain.invoice.value.*;
 import co.com.sofka.domain.generic.DomainEvent;
 import org.junit.jupiter.api.Assertions;
@@ -22,34 +22,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @ExtendWith(MockitoExtension.class)
-class UpdateContactNumberUseCaseTest {
+class UpdatePaymentUseCaseByEventsTest {
 
     @Mock
     private DomainEventRepository repository;
 
     @Test
-    void UpdateCustomerContactNumber(){
+    void UpdatePaymentMethod(){
         //arrange
         var aggregateID = "xxx-xxx";
-        var command = new UpdateContactNumber(InvoiceID.of(aggregateID), "0123456789");
+        var event = new PaymentUpdated(InvoiceID.of(aggregateID), 1);
 
-        var useCase = new UpdateContactNumberUseCase();
+        var useCase = new UpdatePaymentUseCaseByEvents();
 
         Mockito.when(repository.getEventsBy(aggregateID)).thenReturn(eventStored());
         useCase.addRepository(repository);
         //act
 
         var events = UseCaseHandler.getInstance().
-                syncExecutor(useCase, new RequestCommand<>(command))
+                syncExecutor(useCase, new TriggeredEvent<>(event))
                 .orElseThrow().getDomainEvents();
 
         //assert
 
-        var eventCreation = (ContactNumberUpdated)events.get(0);
+        var eventCreation = (PaymentUpdated)events.get(0);
 
-        Assertions.assertEquals("0123456789", eventCreation.getNewNumber());
+        Assertions.assertEquals(1, eventCreation.getNewPayment());
         Mockito.verify(repository).getEventsBy(aggregateID);
     }
 

@@ -47,7 +47,7 @@ public class Invoice extends AggregateEvent<InvoiceID> {
 
     public void updatePaymentMethod(Integer paymentMethod){
         Objects.requireNonNull(paymentMethod);
-        appendChange(new PaymentUpdated(paymentMethod)).apply();
+        appendChange(new PaymentUpdated(this.identity(), paymentMethod)).apply();
     }
 
     public void generateProductLst(){
