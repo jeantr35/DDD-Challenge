@@ -1,6 +1,7 @@
 package co.com.sofka.ddd.domain.invoice.commands;
 
 import co.com.sofka.ddd.domain.inventory.value.ProductID;
+import co.com.sofka.ddd.domain.invoice.Invoice;
 import co.com.sofka.ddd.domain.invoice.value.*;
 import co.com.sofka.domain.generic.Command;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 public class CreateInvoice extends Command {
 
+    private final InvoiceID invoiceID;
     private final PaymentMethod paymentMethod;
     private final List<ProductID> productIDS;
     private final CustomerID customerID;
@@ -19,7 +21,8 @@ public class CreateInvoice extends Command {
     private final Name sellerName;
     private final InventoryID inventoryID;
 
-    public CreateInvoice(InventoryID inventoryID, PaymentMethod paymentMethod, List<ProductID> productIDS, CustomerID customerID, Name customerName, Address customerAddress, ContactNumber customerNumber, PackageMaterial packageMaterial, SellerID sellerID, Name sellerName) {
+    public CreateInvoice(InvoiceID invoiceID, InventoryID inventoryID, PaymentMethod paymentMethod, List<ProductID> productIDS, CustomerID customerID, Name customerName, Address customerAddress, ContactNumber customerNumber, PackageMaterial packageMaterial, SellerID sellerID, Name sellerName) {
+        this.invoiceID = invoiceID;
         this.inventoryID = inventoryID;
         this.paymentMethod = paymentMethod;
         this.customerID = customerID;
@@ -71,4 +74,10 @@ public class CreateInvoice extends Command {
     public Name getSellerName() {
         return sellerName;
     }
+
+    public InvoiceID getInvoiceID() {
+        return invoiceID;
+    }
 }
+
+

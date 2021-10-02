@@ -1,14 +1,12 @@
-package co.com.sofka.ddd.usecase;
+package co.com.sofka.ddd.usecase.inventory;
 
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.RequestCommand;
-import co.com.sofka.ddd.domain.inventory.command.UpdateProductName;
 import co.com.sofka.ddd.domain.inventory.command.UpdateProductQuanty;
 import co.com.sofka.ddd.domain.inventory.entity.Product;
 import co.com.sofka.ddd.domain.inventory.event.InventoryCreated;
 import co.com.sofka.ddd.domain.inventory.event.ProductAdded;
-import co.com.sofka.ddd.domain.inventory.event.ProductNameUpdated;
 import co.com.sofka.ddd.domain.inventory.event.ProductQuantyUpdated;
 import co.com.sofka.ddd.domain.inventory.value.*;
 import co.com.sofka.ddd.domain.invoice.value.InventoryID;
@@ -21,8 +19,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class UpdateProductQuantyUseCaseTest {

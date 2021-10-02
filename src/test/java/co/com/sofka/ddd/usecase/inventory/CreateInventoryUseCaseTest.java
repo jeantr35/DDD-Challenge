@@ -1,4 +1,4 @@
-package co.com.sofka.ddd.usecase;
+package co.com.sofka.ddd.usecase.inventory;
 
 import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.support.RequestCommand;
@@ -10,8 +10,6 @@ import co.com.sofka.ddd.domain.inventory.value.OfficeName;
 import co.com.sofka.ddd.domain.invoice.value.InventoryID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class CreateInventoryUseCaseTest {
 

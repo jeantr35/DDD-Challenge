@@ -45,10 +45,6 @@ public class InvoiceChange extends EventChange {
             invoice.seller.updateName(event.getNewName());
         });
 
-        apply((TotalPriceCalculated event) ->{
-            // Generar el inventario de nuevo a partir de la ID
-        });
-
     }
 
 }

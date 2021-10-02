@@ -18,9 +18,11 @@ public class InvoiceCreated extends DomainEvent {
    private final SellerID sellerID;
    private final Name sellerName;
    private final InventoryID inventoryID;
+   private final InvoiceID invoiceID;
 
-    public InvoiceCreated(InventoryID inventoryID, PaymentMethod paymentMethod, List<ProductID> productIDS, CustomerID customerID, Name customerName, Address customerAddress, ContactNumber customerNumber, PackageMaterial packageMaterial, SellerID sellerID, Name sellerName) {
+    public InvoiceCreated(InvoiceID entityId, InventoryID inventoryID, PaymentMethod paymentMethod, List<ProductID> productIDS, CustomerID customerID, Name customerName, Address customerAddress, ContactNumber customerNumber, PackageMaterial packageMaterial, SellerID sellerID, Name sellerName) {
         super("sofka.domain.invoice.invoicecreated");
+        this.invoiceID = entityId;
         this.inventoryID = inventoryID;
         this.paymentMethod = paymentMethod;
         this.customerID = customerID;
@@ -31,6 +33,10 @@ public class InvoiceCreated extends DomainEvent {
         this.packageMaterial = packageMaterial;
         this.sellerID = sellerID;
         this.sellerName = sellerName;
+    }
+
+    public InvoiceID getInvoiceID() {
+        return invoiceID;
     }
 
     public PaymentMethod getPaymentMethod() {

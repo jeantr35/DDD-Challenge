@@ -27,7 +27,7 @@ public class Invoice extends AggregateEvent<InvoiceID> {
     public Invoice(InvoiceID entityId, InventoryID inventoryID, PaymentMethod paymentMethod, List<ProductID> productIDS, CustomerID customerID, Name customerName, Address customerAddress,
                    ContactNumber customerNumber, PackageMaterial packageMaterial, SellerID sellerID, Name sellerName) {
         super(entityId);
-        appendChange(new InvoiceCreated(inventoryID, paymentMethod, productIDS, customerID, customerName, customerAddress, customerNumber, packageMaterial, sellerID, sellerName)).apply();
+        appendChange(new InvoiceCreated(entityId, inventoryID, paymentMethod, productIDS, customerID, customerName, customerAddress, customerNumber, packageMaterial, sellerID, sellerName)).apply();
     }
 
     private Invoice(InvoiceID invoiceID) {
@@ -55,7 +55,7 @@ public class Invoice extends AggregateEvent<InvoiceID> {
     }
 
     public void updateContactNumber(String nemNumber){
-        appendChange(new ContactNumberUpdated(nemNumber)).apply();
+        appendChange(new ContactNumberUpdated(this.identity(), nemNumber)).apply();
     }
 
     public void updatePackageMatherial(Integer packageMatherial){
@@ -63,7 +63,7 @@ public class Invoice extends AggregateEvent<InvoiceID> {
     }
 
     public void updateAddres(String newAddress){
-        appendChange(new AddressUpdated(newAddress)).apply();
+        appendChange(new AddressUpdated(this.identity(), newAddress)).apply();
     }
 
     public void updateCustomerName(String newName){
