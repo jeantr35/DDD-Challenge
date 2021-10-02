@@ -67,7 +67,7 @@ public class Invoice extends AggregateEvent<InvoiceID> {
     }
 
     public void updateCustomerName(String newName){
-        appendChange(new CustomerNameUpdated(newName)).apply();
+        appendChange(new CustomerNameUpdated(this.identity(),newName)).apply();
     }
 
     public void updateSellerName(String newName){
