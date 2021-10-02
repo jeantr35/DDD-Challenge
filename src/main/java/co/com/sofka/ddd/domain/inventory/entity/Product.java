@@ -27,6 +27,22 @@ public class Product extends Entity<ProductID> {
         else productQuanty = new ProductQuanty(quanty - productQuanty.value());
     }
 
+    public ProductPrice getProductPrice() {
+        return productPrice;
+    }
+
+    public ProductName getProductName() {
+        return productName;
+    }
+
+    public ProductState getProductState() {
+        return productState;
+    }
+
+    public ProductQuanty getProductQuanty() {
+        return productQuanty;
+    }
+
     public void updateProductName(String newName){
         productName = new ProductName(newName);
     }

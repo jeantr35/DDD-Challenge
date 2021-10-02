@@ -4,21 +4,18 @@ import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.ddd.domain.inventory.Inventory;
-import co.com.sofka.ddd.domain.inventory.command.AddProduct;
+import co.com.sofka.ddd.domain.inventory.command.AddProvider;
+import co.com.sofka.ddd.domain.inventory.command.UpdateProductQuanty;
 
-
-public class AddProductUseCase extends UseCase<RequestCommand<AddProduct>, ResponseEvents> {
-
+public class AddProviderUseCase extends UseCase<RequestCommand<AddProvider>, ResponseEvents> {
 
     @Override
-    public void executeUseCase(RequestCommand<AddProduct> addProductRequestCommand) {
-
-        var command = addProductRequestCommand.getCommand();
+    public void executeUseCase(RequestCommand<AddProvider> addProviderRequestCommand) {
+        var command = addProviderRequestCommand.getCommand();
         Inventory inventory;
         inventory = Inventory.from(command.getInventoryID(),retrieveEvents(command.getInventoryID().value()));
 
-        inventory.addProduct(command.getProductID(), command.getProductPrice(), command.getProductName(), command.getProductState(), command.getProductQuanty());
+        inventory.addProvider(command.getProviderID(), command.getTotalItems());
         emit().onResponse(new ResponseEvents(inventory.getUncommittedChanges()));
-
     }
 }

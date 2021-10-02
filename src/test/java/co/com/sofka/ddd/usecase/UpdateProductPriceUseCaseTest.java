@@ -4,10 +4,12 @@ import co.com.sofka.business.generic.UseCaseHandler;
 import co.com.sofka.business.repository.DomainEventRepository;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.ddd.domain.inventory.command.UpdateProductName;
+import co.com.sofka.ddd.domain.inventory.command.UpdateProductPrice;
 import co.com.sofka.ddd.domain.inventory.entity.Product;
 import co.com.sofka.ddd.domain.inventory.event.InventoryCreated;
 import co.com.sofka.ddd.domain.inventory.event.ProductAdded;
 import co.com.sofka.ddd.domain.inventory.event.ProductNameUpdated;
+import co.com.sofka.ddd.domain.inventory.event.ProductPriceUpdated;
 import co.com.sofka.ddd.domain.inventory.value.*;
 import co.com.sofka.ddd.domain.invoice.value.InventoryID;
 import co.com.sofka.domain.generic.DomainEvent;
@@ -23,21 +25,21 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class UpdateProductNameUSeCaseTest {
+class UpdateProductPriceUseCaseTest{
 
     @Mock
     private DomainEventRepository repository;
 
     @Test
-    void UpdateProduct(){
+    void UpdateProductPrice(){
         //arrange
         var aggregateID = "xxx-xxx";
         var product = new Product(new ProductID("kumara"), new ProductPrice(180000),
                 new ProductName("KumaraK552"), new ProductState(0),new ProductQuanty(2));
 
-        var command = new UpdateProductName(InventoryID.of(aggregateID), product,"PAPAPAPA");
+        var command = new UpdateProductPrice(InventoryID.of(aggregateID), product.identity(),350000);
 
-        var useCase = new UpdateProductNameUSeCase();
+        var useCase = new UpdateProductPriceUseCase();
 
         Mockito.when(repository.getEventsBy(aggregateID)).thenReturn(eventStored());
         useCase.addRepository(repository);
@@ -49,9 +51,10 @@ class UpdateProductNameUSeCaseTest {
 
         //assert
 
-        var eventCreation = (ProductNameUpdated)events.get(0);
+        var eventCreation = (ProductPriceUpdated)events.get(0);
 
-        Assertions.assertEquals("PAPAPAPA", eventCreation.getNewName());
+        Assertions.assertEquals(350000, eventCreation.getNewPrice());
+        Assertions.assertEquals("kumara", eventCreation.getProductID().value());
         Mockito.verify(repository).getEventsBy(aggregateID);
     }
 
