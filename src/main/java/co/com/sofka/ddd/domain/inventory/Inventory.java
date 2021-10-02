@@ -57,32 +57,32 @@ public class Inventory extends AggregateEvent<InventoryID> {
     public void updateProductNmae(ProductID productID, String newName){
         Objects.requireNonNull(productID);
         Objects.requireNonNull(newName);
-        appendChange(new ProductNameUpdated(productID, newName)).apply();
+        appendChange(new ProductNameUpdated(this.identity(), productID, newName)).apply();
     }
 
     public void updateProductPrice(ProductID productID, Integer newPrice){
         Objects.requireNonNull(productID);
         Objects.requireNonNull(newPrice);
-        appendChange(new ProductPriceUpdated(productID, newPrice));
+        appendChange(new ProductPriceUpdated(this.identity(), productID, newPrice));
     }
 
     public void updateProductQuanty(ProductID productID, Integer quanty, boolean addQuanty){
         Objects.requireNonNull(productID);
         Objects.requireNonNull(quanty);
         Objects.requireNonNull(addQuanty);
-        appendChange(new ProductQuantyUpdated(productID, quanty, addQuanty));
+        appendChange(new ProductQuantyUpdated(this.identity(), productID, quanty, addQuanty));
     }
 
     public void sendProviderItems(ProviderID providerID, ProductID productID, Integer numberOfItems){ // Later
         Objects.requireNonNull(providerID);
         Objects.requireNonNull(productID);
         Objects.requireNonNull(numberOfItems);
-        appendChange(new ProviderSentItems(providerID, productID, numberOfItems));
+        appendChange(new ProviderSentItems(this.identity(), providerID, productID, numberOfItems));
     }
 
     public void updateOfficeName(String newName){
         Objects.requireNonNull(newName);
-        appendChange(new OfficeNameUpdated(newName));
+        appendChange(new OfficeNameUpdated(this.identity(), newName));
     }
 
     public void addProduct(ProductID entityId, ProductPrice productPrice, ProductName productName, ProductState productState, ProductQuanty productQuanty){
@@ -97,6 +97,6 @@ public class Inventory extends AggregateEvent<InventoryID> {
     public void addProvider(ProviderID entityId, TotalItems totalItems){
         Objects.requireNonNull(entityId);
         Objects.requireNonNull(totalItems);
-        appendChange(new ProviderAdded(entityId, totalItems));
+        appendChange(new ProviderAdded(this.identity(), entityId, totalItems));
     }
 }

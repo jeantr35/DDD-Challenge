@@ -4,7 +4,6 @@ import co.com.sofka.business.generic.UseCase;
 import co.com.sofka.business.support.RequestCommand;
 import co.com.sofka.business.support.ResponseEvents;
 import co.com.sofka.ddd.domain.inventory.Inventory;
-import co.com.sofka.ddd.domain.inventory.command.AddProduct;
 import co.com.sofka.ddd.domain.inventory.command.UpdateOfficeName;
 
 public class UpdateOfficeNameUseCase extends UseCase<RequestCommand<UpdateOfficeName>, ResponseEvents> {
@@ -16,9 +15,8 @@ public class UpdateOfficeNameUseCase extends UseCase<RequestCommand<UpdateOffice
         Inventory inventory;
         inventory = Inventory.from(command.getInventoryID(),retrieveEvents(command.getInventoryID().value()));
 
-        inventory.addProduct(command.getProductID(), command.getProductPrice(), command.getProductName(), command.getProductState(), command.getProductQuanty());
+        inventory.updateOfficeName(command.getNewName());
         emit().onResponse(new ResponseEvents(inventory.getUncommittedChanges()));
-
 
     }
 
